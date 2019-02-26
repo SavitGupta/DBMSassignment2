@@ -60,27 +60,27 @@ public class Lock {
     }
 
 
-    public static void main(String[] args) throws InterruptedException{
-        Lock l1 = new Lock();
-        reserve_transaction T1 = new reserve_transaction(l1);
-        reserve_transaction T2 = new reserve_transaction(l1);
-        reserve_transaction T3 = new reserve_transaction(l1);
-        reserve_transaction T4 = new reserve_transaction(l1);
-
-        Thread t1 = new Thread(T1);
-        Thread t2 = new Thread(T2);
-        Thread t3 = new Thread(T3);
-        Thread t4 = new Thread(T4);
-
-        t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
-
-        t1.join();
-        t2.join();
-        t3.join();
-        t4.join();
-
-    }
+//    public static void main(String[] args) throws InterruptedException{
+//        Lock l1 = new Lock();
+//        reserve_transaction T1 = new reserve_transaction(l1);
+//        reserve_transaction T2 = new reserve_transaction(l1);
+//        reserve_transaction T3 = new reserve_transaction(l1);
+//        reserve_transaction T4 = new reserve_transaction(l1);
+//
+//        Thread t1 = new Thread(T1);
+//        Thread t2 = new Thread(T2);
+//        Thread t3 = new Thread(T3);
+//        Thread t4 = new Thread(T4);
+//
+//        t1.start();
+//        t2.start();
+//        t3.start();
+//        t4.start();
+//
+//        t1.join();
+//        t2.join();
+//        t3.join();
+//        t4.join();
+//
+//    }
 }

@@ -1,23 +1,33 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class ConcurrencyController {
-    HashMap<Object , Lock> lockTable;
+    HashMap<Lockables , Lock> lockTable;
 
-    public void add(Object obj){
-        Lock l1 = new Lock();
-        lockTable.put(obj, l1);
+    public void add(Database db){
+        for (Lockables item: db.items.entrySet()) {
+            Lock l1 = new Lock();
+            lockTable.put(item, l1);
+        }
     }
 
-    public void lock_acquire(Object obj, Transactions t1){
+
+
+
+    public void lock_acquire(ArrayList<Lockables> toLock){
         //re-order
-
-        Lock required = lockTable.get(obj);
-        required.acquire( );
-
-
+        toLock.sort(new LockableCompator_id());
+        for (Lockables item: toLock) {
+            lockTable.get(item).acquire();
+        }
     }
 
+    public void release(ArrayList<Lockables> toRelease){
+        for (Lockables item: toRelease) {
+            lockTable.get(item).release();
+        }
+    }
 
 
 

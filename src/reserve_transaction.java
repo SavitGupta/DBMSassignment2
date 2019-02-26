@@ -1,40 +1,29 @@
+import java.util.ArrayList;
+
 public class reserve_transaction implements Runnable{
     Flight flight;
     Passenger passenger;
-    Lock l1;
-    Thread t1;
+    Database db;
+    ConcurrencyController CCM;
+
     static Integer cnt = 0;
     int mycnt;
 
-    public reserve_transaction(Lock l1){
-//        this.flight = flight;
-//        this.passenger = passenger;
-        this.l1 = l1;
+    public reserve_transaction(String flight, String passenger, Database db, ConcurrencyController CCM){
+        this.flight = (Flight)db.getbyId(flight);
+        this.passenger = (Passenger)db.getbyId(passenger);
+        this.db = db;
+        this.CCM = CCM;
         mycnt = cnt ++;
+
     }
-    public void run(){
-
-        System.out.println("thread created" + mycnt);
-        l1.acquire();
-
-
-        System.out.println("acquired lock" + mycnt);
-
-        try{
-            Thread.sleep(1000);
-
-        }
-        catch (InterruptedException e){
-            System.out.println("interupted ...." + mycnt);
-        }
-        finally {
-            System.out.println("l1 attempts release " + mycnt);
-            l1.release();
-        }
-
-        System.out.println("done " + mycnt);
-
-
+    public void run() {
+        ArrayList<Lockables> varsNeeded = new ArrayList<>();
+        varsNeeded.add(flight);
+        varsNeeded.add(passenger);
+        CCM.lock_acquire(varsNeeded);
+        flight.book_flight(passenger);
+        CCM.release(varsNeeded);
     }
 
 
