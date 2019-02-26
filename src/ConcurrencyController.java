@@ -13,7 +13,7 @@ public class ConcurrencyController {
         //re-order
 
         Lock required = lockTable.get(obj);
-        required.acquire();
+        required.acquire( );
 
 
     }
