@@ -1,10 +1,12 @@
+import javafx.util.Pair;
+
 import java.util.Comparator;
 
-public class LockableCompator_id implements Comparator<Lockables>
+public class LockableCompator_id implements Comparator<Pair<Integer, Lockables>>
 {
 	@Override
-	public int compare(Lockables o1, Lockables o2)
+	public int compare(Pair<Integer, Lockables> o1, Pair<Integer, Lockables> o2)
 	{
-		return o2.id.compareTo(o1.id);
+		return o2.getValue().id.compareTo(o1.getValue().id);
 	}
 }

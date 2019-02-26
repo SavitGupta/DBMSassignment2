@@ -2,26 +2,30 @@ import java.util.LinkedList;
 
 public class Lock
 {
-	volatile boolean isLocked;
-	volatile int heldby = 0;
+	volatile boolean isLocked_shared;
+	volatile boolean isLocked_exclusive;
+	volatile int heldby;
 	String id_holder;
 	LinkedList<Thread> waiters;
 	
 	public Lock()
 	{
 		waiters = new LinkedList<>();
-		isLocked = false;
+		isLocked_shared = false;
+		isLocked_shared = false;
+		heldby = 0;
 		id_holder = "";
 	}
 	
-	void acquire()
+	void acquire_shared()
 	{
 		Thread t1 = Thread.currentThread();
 		synchronized (this)
 		{
-			if (!isLocked)
+			if (!isLocked_exclusive)
 			{
-				isLocked = true;
+				isLocked_shared = true;
+				heldby++;
 				return;
 			}
 			// System.out.println("had to wait ");
@@ -42,9 +46,50 @@ public class Lock
 				// System.out.println("interrupted inside wait");
 				synchronized (this)
 				{
-					if (t1 == waiters.getFirst() && !isLocked)
+					if (t1 == waiters.getFirst() && !isLocked_exclusive)
 					{
-						isLocked = true;
+						isLocked_shared = true;
+						heldby = 1;
+						waiters.removeFirst();
+						flag = true;
+					}
+				}
+			}
+		}
+	}
+
+	void acquire_exclusive()
+	{
+		Thread t1 = Thread.currentThread();
+		synchronized (this)
+		{
+			if (!isLocked_shared && !isLocked_exclusive)
+			{
+				isLocked_exclusive = true;
+				heldby = 0;
+				return;
+			}
+			// System.out.println("had to wait ");
+			// boolean flag = false;
+			waiters.add(t1);
+		}
+		boolean flag = false;
+		// System.out.println("had to wait");
+		while (!flag)
+		{
+			// System.out.println("while loop of wait");
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e)
+			{
+				// System.out.println("interrupted inside wait");
+				synchronized (this)
+				{
+					if (t1 == waiters.getFirst() && !isLocked_exclusive && !isLocked_shared)
+					{
+						isLocked_exclusive = true;
 						waiters.removeFirst();
 						flag = true;
 					}
@@ -56,7 +101,14 @@ public class Lock
 	synchronized void release()
 	{
 		// System.out.println("just inside release");
-		isLocked = false;
+		isLocked_exclusive = false;
+		if(heldby > 0){
+			heldby --;
+			if(heldby == 0){
+				isLocked_shared = false;
+			}
+		}
+		System.out.println("lock released");
 		if (waiters.size() > 0)
 		{
 			// System.out.println("inside while in release");

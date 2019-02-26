@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -20,22 +22,30 @@ public class ConcurrencyController
 			lockTable.put(l5, l1);
 		}
 	}
-	
-	public void lock_acquire(ArrayList<Lockables> toLock)
+
+
+	public void lock_acquire(ArrayList<Pair<Integer, Lockables>> toLock)
 	{
 		// re-order
 		toLock.sort(new LockableCompator_id());
-		for (Lockables item : toLock)
+		for (Pair<Integer, Lockables> item : toLock)
 		{
-			lockTable.get(item).acquire();
+			if(item.getKey() == 1){
+				//shared lock
+				lockTable.get(item.getValue()).acquire_shared();
+			}
+			else{
+				lockTable.get(item.getValue()).acquire_exclusive();
+			}
+
 		}
 	}
-	
-	public void release(ArrayList<Lockables> toRelease)
+	public void release(ArrayList<Pair<Integer, Lockables>> toRelease)
 	{
-		for (Lockables item : toRelease)
+		for (Pair<Integer, Lockables> item : toRelease)
 		{
-			lockTable.get(item).release();
+			System.out.println();
+			lockTable.get(item.getValue()).release();
 		}
 	}
 }

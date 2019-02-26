@@ -36,4 +36,15 @@ public class Flight extends Lockables
 		pas.add_flight(this);
 		return true;
 	}
+	public boolean cancel_flight(Passenger pas)
+	{
+		if(!pas.flights.contains(this)){
+			return false;
+		}
+		else{
+			pas.cancel_flight(this);
+			capacity ++;
+			return true;
+		}
+	}
 }

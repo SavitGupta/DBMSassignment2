@@ -12,9 +12,13 @@ public class Passenger extends Lockables
 		this.flights = new ArrayList<>();
 		db.add(this);
 	}
-	
+
 	public void add_flight(Flight flight)
 	{
 		this.flights.add(flight);
+	}
+	public void cancel_flight(Flight flight)
+	{
+		this.flights.remove(flight);
 	}
 }
