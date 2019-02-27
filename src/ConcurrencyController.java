@@ -42,7 +42,12 @@ public class ConcurrencyController
 			}
 		}
 	}
-	
+
+	public void lockDatabase(){
+
+	}
+
+
 	public void release(ArrayList<Pair<Integer, Lockables>> toRelease)
 	{
 		for (Pair<Integer, Lockables> item : toRelease)

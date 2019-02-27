@@ -29,13 +29,18 @@ public class MainClass
 	{
 		for (int i = 0; i < num; i++)
 		{
-			int pos = RandInt(1, 5);
-			if (pos == 1)
+			int pos = RandInt(0, 4);
+			if (pos == 0)
 			{
-				transactions.add(new TransferTransaction(flights.get(RandInt(0, flights.size() - 1)).id, flights.get(RandInt(0, flights.size() - 1)).id,
+				int guess1 = RandInt(0, flights.size() - 1);
+				int guess2 = RandInt(0, flights.size() - 1);
+				while( guess1 == guess2){
+					guess2 =  RandInt(0, flights.size() - 1);
+				}
+				transactions.add(new TransferTransaction(flights.get(guess1).id, flights.get(guess2).id,
 						passengers.get(RandInt(0, passengers.size() - 1)).id, db, ccm));
 			}
-			else if (pos == 2)
+			if (pos == 1)
 			{
 				transactions.add(new ReserveTransaction(flights.get(RandInt(0, flights.size() - 1)).id, passengers.get(RandInt(0, passengers.size() - 1)).id, db, ccm));
 			}
@@ -43,7 +48,7 @@ public class MainClass
 			{
 				transactions.add(new MyFlightsTransaction(passengers.get(RandInt(0, passengers.size() - 1)).id, db, ccm));
 			}
-			else if (pos == 2)
+			else if (pos == 3)
 			{
 				transactions.add(new CancelTransaction(flights.get(RandInt(0, flights.size() - 1)).id, passengers.get(RandInt(0, passengers.size() - 1)).id, db, ccm));
 			}
@@ -61,8 +66,8 @@ public class MainClass
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 		ArrayList<Runnable> transactions = new ArrayList<Runnable>();
-		int num_items = 60;
-		int num_trans = 1000;
+		int num_items = 15;
+		int num_trans = 10000;
 		generate_Database(num_items, db, flights, passengers);
 		ccm.add(db);
 		generate_Transactions(num_trans, db, flights, passengers, transactions, ccm);
@@ -76,6 +81,7 @@ public class MainClass
 			exec.shutdown();
 			exec.awaitTermination(5L, TimeUnit.SECONDS);
 		}
+
 		// Flight f1 = new Flight("F1", 4, db);
 		// Flight f2 = new Flight("F2", 4, db);
 		// Flight f3 = new Flight("F3", 4, db);
