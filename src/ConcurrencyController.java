@@ -42,19 +42,37 @@ public class ConcurrencyController
 			}
 		}
 	}
-
-	public void lockDatabase(int type){
-		for (Entry<Lockables, Lock> item : lockTable.entrySet()){
-			if(type == 1) {
-				item.getValue().acquire_shared();
-			}
-			else {
-				item.getValue().acquire_exclusive();
-			}
+	
+	public void lockDatabase(int type)
+	{
+		for (Entry<Lockables, Lock> item : lockTable.entrySet())
+		{
+			// if (type == 1)
+			// {
+			// item.getValue().acquire_shared();
+			// }
+			// else
+			// {
+			item.getValue().acquire_exclusive();
+			// }
 		}
 	}
-
-
+	
+	public void releaeDatabase()
+	{
+		for (Entry<Lockables, Lock> item : lockTable.entrySet())
+		{
+			// if (type == 1)
+			// {
+			// item.getValue().acquire_shared();
+			// }
+			// else
+			// {
+			item.getValue().release();
+			// }
+		}
+	}
+	
 	public void release(ArrayList<Pair<Integer, Lockables>> toRelease)
 	{
 		for (Pair<Integer, Lockables> item : toRelease)

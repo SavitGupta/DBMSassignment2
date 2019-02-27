@@ -10,14 +10,16 @@ public class ReserveTransaction implements Runnable
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
 	int mycnt;
+	int type;
 	
-	public ReserveTransaction(String flight, String passenger, Database db, ConcurrencyController CCM)
+	public ReserveTransaction(String flight, String passenger, Database db, ConcurrencyController CCM, int type)
 	{
 		this.flight = (Flight) db.getbyId(flight);
 		this.passenger = (Passenger) db.getbyId(passenger);
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
+		this.type = type;
 	}
 	
 	public void run()
@@ -27,11 +29,25 @@ public class ReserveTransaction implements Runnable
 		varsNeeded.add(new Pair<>(2, flight));
 		varsNeeded.add(new Pair<>(2, passenger));
 		// System.out.println("variables added " + mycnt);
-		CCM.lock_acquire(varsNeeded);
+		if (this.type == 1)
+		{
+			CCM.lock_acquire(varsNeeded);
+		}
+		else
+		{
+			CCM.lockDatabase(2);
+		}
 		System.out.println("lock acquired for reserve transaction " + mycnt);
 		flight.book_flight(passenger);
 		System.out.println("flight booked " + mycnt);
-		CCM.release(varsNeeded);
+		if (this.type == 1)
+		{
+			CCM.release(varsNeeded);
+		}
+		else
+		{
+			CCM.releaeDatabase();
+		}
 		System.out.println("ended reserve transaction " + mycnt);
 	}
 }

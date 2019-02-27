@@ -10,13 +10,15 @@ public class TotalReservationTransaction implements Runnable
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
 	int mycnt;
+	int type;
 	
-	public TotalReservationTransaction(Database db, ConcurrencyController CCM)
+	public TotalReservationTransaction(Database db, ConcurrencyController CCM, int type)
 	{
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
 		this.flights = new ArrayList<Flight>();
+		this.type = type;
 		for (Entry<String, Lockables> item : db.items.entrySet())
 		{
 			if (item.getKey().charAt(0) == 'F')
@@ -34,7 +36,14 @@ public class TotalReservationTransaction implements Runnable
 		{
 			varsNeeded.add(new Pair<>(1, flights.get(i)));
 		}
-		CCM.lock_acquire(varsNeeded);
+		if (this.type == 1)
+		{
+			CCM.lock_acquire(varsNeeded);
+		}
+		else
+		{
+			CCM.lockDatabase(1);
+		}
 		System.out.println("lock acquired for total reservations transaction " + mycnt);
 		int total_Res = 0;
 		for (int i = 0; i < flights.size(); i++)
@@ -42,7 +51,14 @@ public class TotalReservationTransaction implements Runnable
 			total_Res += (flights.get(i).capacity - flights.get(i).availablitiy);
 		}
 		System.out.println("Total reservations are " + total_Res);
-		CCM.release(varsNeeded);
+		if (this.type == 1)
+		{
+			CCM.release(varsNeeded);
+		}
+		else
+		{
+			CCM.releaeDatabase();
+		}
 		System.out.println("ended total reservations transaction " + mycnt);
 	}
 }

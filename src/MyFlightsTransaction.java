@@ -9,13 +9,15 @@ public class MyFlightsTransaction implements Runnable
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
 	int mycnt;
+	int type;
 	
-	public MyFlightsTransaction(String passenger, Database db, ConcurrencyController CCM)
+	public MyFlightsTransaction(String passenger, Database db, ConcurrencyController CCM, int type)
 	{
 		this.passenger = (Passenger) db.getbyId(passenger);
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
+		this.type = type;
 	}
 	
 	public void run()
@@ -23,7 +25,14 @@ public class MyFlightsTransaction implements Runnable
 		System.out.println("started my_flight transaction " + mycnt);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		varsNeeded.add(new Pair<>(1, passenger));
-		CCM.lock_acquire(varsNeeded);
+		if (this.type == 1)
+		{
+			CCM.lock_acquire(varsNeeded);
+		}
+		else
+		{
+			CCM.lockDatabase(1);
+		}
 		System.out.println("lock acquired for my_flight transaction " + mycnt);
 		ArrayList<Flight> flights = passenger.get_flights();
 		if (flights.size() != 0)
@@ -39,7 +48,14 @@ public class MyFlightsTransaction implements Runnable
 		{
 			System.out.println("Passenger has no flights ");
 		}
-		CCM.release(varsNeeded);
+		if (this.type == 1)
+		{
+			CCM.release(varsNeeded);
+		}
+		else
+		{
+			CCM.releaeDatabase();
+		}
 		System.out.println("ended my_flight transaction " + mycnt);
 	}
 }
