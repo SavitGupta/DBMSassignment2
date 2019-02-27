@@ -42,6 +42,9 @@ public class TransferTransaction implements Runnable
 		{
 			CCM.lockDatabase(2);
 		}
+		passenger = (Passenger) db.getbyId(passengerId);
+		flight1 = (Flight) db.getbyId(flight1Id);
+		flight2 = (Flight) db.getbyId(flight2Id);
 		// System.out.println("lock acquired for transfer transaction " + mycnt);
 		passenger.transfer(flight1, flight2);
 		// System.out.println("Transfer completed");

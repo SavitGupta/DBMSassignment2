@@ -39,6 +39,8 @@ public class ReserveTransaction implements Runnable
 		{
 			CCM.lockDatabase(2);
 		}
+		flight = (Flight) db.getbyId(flightId);
+		passenger = (Passenger) db.getbyId(passengerId);
 		// System.out.println("lock acquired for reserve transaction " + mycnt);
 		flight.book_flight(passenger);
 		// System.out.println("flight booked " + mycnt);

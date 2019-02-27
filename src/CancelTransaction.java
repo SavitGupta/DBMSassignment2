@@ -38,6 +38,8 @@ public class CancelTransaction implements Runnable
 		{
 			CCM.lockDatabase(2);
 		}
+		flight = (Flight) db.getbyId(flightId);
+		passenger = (Passenger) db.getbyId(passengerId);
 		// System.out.println("lock acquired for cancel transaction " + mycnt);
 		flight.cancel_flight(passenger);
 		// System.out.println("flight canceled " + mycnt);

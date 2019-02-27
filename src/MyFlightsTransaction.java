@@ -35,6 +35,8 @@ public class MyFlightsTransaction implements Runnable
 			// System.out.println("here");
 			CCM.lockDatabase(1);
 		}
+		passenger = (Passenger) db.getbyId(passengerId);
+
 		// System.out.println("lock acquired for my_flight transaction " + mycnt);
 		ArrayList<Flight> flights = passenger.get_flights();
 		if (flights.size() != 0)
