@@ -67,7 +67,7 @@ public class MainClass
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 		int num_items = 105;
-		int num_trans = 1000;
+		int num_trans = 10;
 		generate_Database(num_items, db, flights, passengers);
 		generate_Transactions(num_trans, db, flights, passengers, transactions, ccm, 1);
 		for (int i = 0; i < 5; i++)
@@ -95,7 +95,9 @@ public class MainClass
 				exec.shutdown();
 				exec.awaitTermination(5L, TimeUnit.SECONDS);
 			}
-			float endTime = System.nanoTime();
+			float endTime = 0;
+			System.out.println(exec.isTerminated());
+			endTime = System.nanoTime();
 			tooktime = (endTime - startTime);
 			throughput = 500 * 1000000000 / tooktime;
 			System.out.println("Throughput for " + (i * 5 + a) + " threads is " + throughput + " 2PL transactions");
@@ -127,7 +129,11 @@ public class MainClass
 				exec.shutdown();
 				exec.awaitTermination(5L, TimeUnit.SECONDS);
 			}
-			float endTime = System.nanoTime();
+			float endTime = 0;
+			if (exec.isTerminated())
+			{
+				endTime = System.nanoTime();
+			}
 			tooktime = (endTime - startTime);
 			throughput = 500 * 1000000000 / tooktime;
 			System.out.println("Throughput for " + (i * 5 + a) + " threads is " + throughput + " serial transactions");

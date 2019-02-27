@@ -26,11 +26,10 @@ public class TransferTransaction implements Runnable
 	
 	public void run()
 	{
-		System.out.println("started transfer transaction " + mycnt);
+		// System.out.println("started transfer transaction " + mycnt);
 		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		Flight flight1 = (Flight) db.getbyId(flight1Id);
 		Flight flight2 = (Flight) db.getbyId(flight2Id);
-
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		varsNeeded.add(new Pair<>(2, passenger));
 		varsNeeded.add(new Pair<>(2, flight1));
@@ -43,16 +42,16 @@ public class TransferTransaction implements Runnable
 		{
 			CCM.lockDatabase(2);
 		}
-		System.out.println("lock acquired for transfer transaction " + mycnt);
+		// System.out.println("lock acquired for transfer transaction " + mycnt);
 		passenger.transfer(flight1, flight2);
-		System.out.println("Transfer completed");
+		// System.out.println("Transfer completed");
 		if (this.type == 1)
 		{
 			CCM.release(varsNeeded);
 		}
 		else
 		{
-			CCM.releaeDatabase();
+			CCM.releaseDatabase();
 		}
 		System.out.println("ended transfer transaction " + mycnt);
 	}

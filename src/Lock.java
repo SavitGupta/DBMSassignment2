@@ -110,7 +110,7 @@ public class Lock
 				isLocked_shared = false;
 			}
 		}
-		System.out.println("lock released");
+		// System.out.println("lock released");
 		if (waiters.size() > 0)
 		{
 			// System.out.println("inside while in release");

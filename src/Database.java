@@ -16,6 +16,14 @@ public class Database
 	
 	public Lockables getbyId(String id)
 	{
+		try
+		{
+			Thread.sleep(3);
+		}
+		catch (InterruptedException e)
+		{
+			// System.out.println("Got interrupt");
+		}
 		return items.get(id);
 	}
 }

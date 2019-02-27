@@ -47,29 +47,15 @@ public class ConcurrencyController
 	{
 		for (Entry<Lockables, Lock> item : lockTable.entrySet())
 		{
-			// if (type == 1)
-			// {
-			// item.getValue().acquire_shared();
-			// }
-			// else
-			// {
 			item.getValue().acquire_exclusive();
-			// }
 		}
 	}
 	
-	public void releaeDatabase()
+	public void releaseDatabase()
 	{
 		for (Entry<Lockables, Lock> item : lockTable.entrySet())
 		{
-			// if (type == 1)
-			// {
-			// item.getValue().acquire_shared();
-			// }
-			// else
-			// {
 			item.getValue().release();
-			// }
 		}
 	}
 	

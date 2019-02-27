@@ -22,7 +22,7 @@ public class MyFlightsTransaction implements Runnable
 	
 	public void run()
 	{
-		System.out.println("started my_flight transaction " + mycnt);
+		// System.out.println("started my_flight transaction " + mycnt);
 		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		varsNeeded.add(new Pair<>(1, passenger));
@@ -34,20 +34,20 @@ public class MyFlightsTransaction implements Runnable
 		{
 			CCM.lockDatabase(1);
 		}
-		System.out.println("lock acquired for my_flight transaction " + mycnt);
+		// System.out.println("lock acquired for my_flight transaction " + mycnt);
 		ArrayList<Flight> flights = passenger.get_flights();
 		if (flights.size() != 0)
 		{
-			System.out.print("Passenger has following flights: ");
+			// System.out.print("Passenger has following flights: ");
 			for (int i = 0; i < flights.size() - 1; i++)
 			{
 				System.out.print(flights.get(i).id + " ");
 			}
-			System.out.println(flights.get(flights.size() - 1).id);
+			// System.out.println(flights.get(flights.size() - 1).id);
 		}
 		else
 		{
-			System.out.println("Passenger has no flights ");
+			// System.out.println("Passenger has no flights ");
 		}
 		if (this.type == 1)
 		{
@@ -55,7 +55,7 @@ public class MyFlightsTransaction implements Runnable
 		}
 		else
 		{
-			CCM.releaeDatabase();
+			CCM.releaseDatabase();
 		}
 		System.out.println("ended my_flight transaction " + mycnt);
 	}

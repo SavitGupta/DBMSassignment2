@@ -16,7 +16,6 @@ public class CancelTransaction implements Runnable
 	{
 		flightId = flight;
 		passengerId = passenger;
-
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
@@ -25,7 +24,7 @@ public class CancelTransaction implements Runnable
 	
 	public void run()
 	{
-		System.out.println("started cancel transaction " + mycnt);
+		// System.out.println("started cancel transaction " + mycnt);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		Flight flight = (Flight) db.getbyId(flightId);
 		Passenger passenger = (Passenger) db.getbyId(passengerId);
@@ -39,16 +38,16 @@ public class CancelTransaction implements Runnable
 		{
 			CCM.lockDatabase(2);
 		}
-		System.out.println("lock acquired for cancel transaction " + mycnt);
+		// System.out.println("lock acquired for cancel transaction " + mycnt);
 		flight.cancel_flight(passenger);
-		System.out.println("flight canceled " + mycnt);
+		// System.out.println("flight canceled " + mycnt);
 		if (this.type == 1)
 		{
 			CCM.release(varsNeeded);
 		}
 		else
 		{
-			CCM.releaeDatabase();
+			CCM.releaseDatabase();
 		}
 		System.out.println("ended cancel transaction " + mycnt);
 	}

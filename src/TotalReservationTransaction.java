@@ -17,12 +17,11 @@ public class TotalReservationTransaction implements Runnable
 		this.CCM = CCM;
 		mycnt = cnt++;
 		this.type = type;
-
 	}
 	
 	public void run()
 	{
-		System.out.println("started total reservations transaction " + mycnt);
+		// System.out.println("started total reservations transaction " + mycnt);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		for (Entry<String, Lockables> item : db.items.entrySet())
@@ -44,20 +43,20 @@ public class TotalReservationTransaction implements Runnable
 		{
 			CCM.lockDatabase(1);
 		}
-		System.out.println("lock acquired for total reservations transaction " + mycnt);
+		// System.out.println("lock acquired for total reservations transaction " + mycnt);
 		int total_Res = 0;
 		for (int i = 0; i < flights.size(); i++)
 		{
 			total_Res += (flights.get(i).capacity - flights.get(i).availablitiy);
 		}
-		System.out.println("Total reservations are " + total_Res);
+		// System.out.println("Total reservations are " + total_Res);
 		if (this.type == 1)
 		{
 			CCM.release(varsNeeded);
 		}
 		else
 		{
-			CCM.releaeDatabase();
+			CCM.releaseDatabase();
 		}
 		System.out.println("ended total reservations transaction " + mycnt);
 	}
