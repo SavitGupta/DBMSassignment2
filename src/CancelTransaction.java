@@ -4,8 +4,8 @@ import javafx.util.Pair;
 
 public class CancelTransaction implements Runnable
 {
-	Flight flight;
-	Passenger passenger;
+	String flightId;
+	String passengerId;
 	Database db;
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
@@ -14,8 +14,9 @@ public class CancelTransaction implements Runnable
 	
 	public CancelTransaction(String flight, String passenger, Database db, ConcurrencyController CCM, int type)
 	{
-		this.flight = (Flight) db.getbyId(flight);
-		this.passenger = (Passenger) db.getbyId(passenger);
+		flightId = flight;
+		passengerId = passenger;
+
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
@@ -26,6 +27,8 @@ public class CancelTransaction implements Runnable
 	{
 		System.out.println("started cancel transaction " + mycnt);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
+		Flight flight = (Flight) db.getbyId(flightId);
+		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		varsNeeded.add(new Pair<>(2, flight));
 		varsNeeded.add(new Pair<>(2, passenger));
 		if (this.type == 1)

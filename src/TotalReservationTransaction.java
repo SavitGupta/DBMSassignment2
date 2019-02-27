@@ -5,7 +5,6 @@ import javafx.util.Pair;
 
 public class TotalReservationTransaction implements Runnable
 {
-	ArrayList<Flight> flights;
 	Database db;
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
@@ -17,8 +16,15 @@ public class TotalReservationTransaction implements Runnable
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
-		this.flights = new ArrayList<Flight>();
 		this.type = type;
+
+	}
+	
+	public void run()
+	{
+		System.out.println("started total reservations transaction " + mycnt);
+		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
+		ArrayList<Flight> flights = new ArrayList<Flight>();
 		for (Entry<String, Lockables> item : db.items.entrySet())
 		{
 			if (item.getKey().charAt(0) == 'F')
@@ -26,12 +32,6 @@ public class TotalReservationTransaction implements Runnable
 				flights.add((Flight) item.getValue());
 			}
 		}
-	}
-	
-	public void run()
-	{
-		System.out.println("started total reservations transaction " + mycnt);
-		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		for (int i = 0; i < flights.size(); i++)
 		{
 			varsNeeded.add(new Pair<>(1, flights.get(i)));

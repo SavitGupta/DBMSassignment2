@@ -4,7 +4,7 @@ import javafx.util.Pair;
 
 public class MyFlightsTransaction implements Runnable
 {
-	Passenger passenger;
+	String passengerId;
 	Database db;
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
@@ -13,7 +13,7 @@ public class MyFlightsTransaction implements Runnable
 	
 	public MyFlightsTransaction(String passenger, Database db, ConcurrencyController CCM, int type)
 	{
-		this.passenger = (Passenger) db.getbyId(passenger);
+		passengerId = passenger;
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
@@ -23,6 +23,7 @@ public class MyFlightsTransaction implements Runnable
 	public void run()
 	{
 		System.out.println("started my_flight transaction " + mycnt);
+		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		varsNeeded.add(new Pair<>(1, passenger));
 		if (this.type == 1)
