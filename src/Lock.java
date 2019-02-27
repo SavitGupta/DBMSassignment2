@@ -37,7 +37,7 @@ public class Lock
 		while (!flag)
 		{
 			// System.out.println("while loop of wait");
-			try
+			 try
 			{
 				Thread.sleep(1000);
 			}
