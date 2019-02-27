@@ -43,8 +43,15 @@ public class ConcurrencyController
 		}
 	}
 
-	public void lockDatabase(){
-
+	public void lockDatabase(int type){
+		for (Entry<Lockables, Lock> item : lockTable.entrySet()){
+			if(type == 1) {
+				item.getValue().acquire_shared();
+			}
+			else {
+				item.getValue().acquire_exclusive();
+			}
+		}
 	}
 
 
