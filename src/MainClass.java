@@ -6,9 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 public class MainClass
 {
+	static Random rand = new Random(123);
 	public static int RandInt(int a, int b)
 	{
-		Random rand = new Random();
 		int randomNum = rand.nextInt(b + 1 - a) + a;
 		return randomNum;
 	}
@@ -67,7 +67,7 @@ public class MainClass
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 		int num_items = 105;
-		int num_trans = 10;
+		int num_trans = 100;
 		generate_Database(num_items, db, flights, passengers);
 		generate_Transactions(num_trans, db, flights, passengers, transactions, ccm, 1);
 		for (int i = 0; i < 5; i++)
@@ -84,8 +84,8 @@ public class MainClass
 				pa.reset();
 			}
 			ccm.add(db);
-			ExecutorService exec = Executors.newFixedThreadPool(i * 5 + a);
-			float startTime = System.nanoTime();
+			ExecutorService exec = Executors.newFixedThreadPool(i * 2  + a);
+			long startTime = System.currentTimeMillis();
 			for (int j = 0; j < num_trans; j++)
 			{
 				exec.execute(transactions.get(j));
@@ -95,14 +95,17 @@ public class MainClass
 				exec.shutdown();
 				exec.awaitTermination(5L, TimeUnit.SECONDS);
 			}
-			float endTime = 0;
-			System.out.println(exec.isTerminated());
-			endTime = System.nanoTime();
+			long endTime = 0;
+			//System.out.println(exec.isTerminated());
+			endTime = System.currentTimeMillis();
 			tooktime = (endTime - startTime);
-			throughput = 500 * 1000000000 / tooktime;
-			System.out.println("Throughput for " + (i * 5 + a) + " threads is " + throughput + " 2PL transactions");
+			throughput = num_trans * (1000 / tooktime);
+//			System.out.println("time taken " + tooktime);
+			//System.out.println("start " + startTime + " end " + endTime);
+			System.out.println("Throughput for " + (i  + a) + " threads is " + throughput + " 2PL transactions");
 		}
 		System.out.println();
+		transactions = new ArrayList<>();
 		generate_Transactions(num_trans, db, flights, passengers, transactions, ccm, 2);
 		for (int i = 0; i < 5; i++)
 		{
@@ -118,8 +121,8 @@ public class MainClass
 				pa.reset();
 			}
 			ccm.add(db);
-			ExecutorService exec = Executors.newFixedThreadPool(i * 5 + a);
-			float startTime = System.nanoTime();
+			ExecutorService exec = Executors.newFixedThreadPool(i * 2 + a);
+			long startTime = System.currentTimeMillis();
 			for (int j = 0; j < num_trans; j++)
 			{
 				exec.execute(transactions.get(j));
@@ -129,14 +132,14 @@ public class MainClass
 				exec.shutdown();
 				exec.awaitTermination(5L, TimeUnit.SECONDS);
 			}
-			float endTime = 0;
-			if (exec.isTerminated())
-			{
-				endTime = System.nanoTime();
-			}
+			long endTime = 0;
+
+			endTime = System.currentTimeMillis();
+
 			tooktime = (endTime - startTime);
-			throughput = 500 * 1000000000 / tooktime;
-			System.out.println("Throughput for " + (i * 5 + a) + " threads is " + throughput + " serial transactions");
+			throughput = num_trans * (1000 / tooktime);
+			//System.out.println("start " + startTime + " end " + endTime);
+			System.out.println("Throughput for " + (i + a) + " threads is " + throughput + " serial transactions");
 		}
 	}
 }

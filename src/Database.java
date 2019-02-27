@@ -18,7 +18,7 @@ public class Database
 	{
 		try
 		{
-			Thread.sleep(3);
+			Thread.sleep(10);
 		}
 		catch (InterruptedException e)
 		{

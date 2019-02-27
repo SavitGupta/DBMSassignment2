@@ -50,6 +50,6 @@ public class ReserveTransaction implements Runnable
 		{
 			CCM.releaseDatabase();
 		}
-		System.out.println("ended reserve transaction " + mycnt);
+//		System.out.println("ended reserve transaction " + mycnt);
 	}
 }

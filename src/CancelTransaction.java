@@ -49,6 +49,6 @@ public class CancelTransaction implements Runnable
 		{
 			CCM.releaseDatabase();
 		}
-		System.out.println("ended cancel transaction " + mycnt);
+//		System.out.println("ended cancel transaction " + mycnt);
 	}
 }
