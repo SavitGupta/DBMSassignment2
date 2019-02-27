@@ -53,6 +53,6 @@ public class TransferTransaction implements Runnable
 		{
 			CCM.releaseDatabase();
 		}
-//		System.out.println("ended transfer transaction " + mycnt);
+		// System.out.println("ended transfer transaction " + mycnt);
 	}
 }

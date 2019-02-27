@@ -18,7 +18,6 @@ public class MyFlightsTransaction implements Runnable
 		this.CCM = CCM;
 		mycnt = cnt++;
 		this.type = type;
-
 	}
 	
 	public void run()
@@ -27,16 +26,13 @@ public class MyFlightsTransaction implements Runnable
 		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		varsNeeded.add(new Pair<>(1, passenger));
-
-
-
 		if (this.type == 1)
 		{
 			CCM.lock_acquire(varsNeeded);
 		}
 		else
 		{
-//			System.out.println("here");
+			// System.out.println("here");
 			CCM.lockDatabase(1);
 		}
 		// System.out.println("lock acquired for my_flight transaction " + mycnt);
@@ -62,6 +58,6 @@ public class MyFlightsTransaction implements Runnable
 		{
 			CCM.releaseDatabase();
 		}
-//		System.out.println("ended my_flight transaction " + mycnt);
+		// System.out.println("ended my_flight transaction " + mycnt);
 	}
 }

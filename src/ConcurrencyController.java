@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import javafx.util.Pair;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class ConcurrencyController
 {
@@ -45,11 +44,11 @@ public class ConcurrencyController
 	{
 		for (Entry<Lockables, Lock> item : lockTable.entrySet())
 		{
-//			try {
-//				Thread.sleep(10000);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			// try {
+			// Thread.sleep(10000);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
 			item.getValue().acquire_exclusive();
 		}
 	}

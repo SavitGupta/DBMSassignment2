@@ -58,6 +58,6 @@ public class TotalReservationTransaction implements Runnable
 		{
 			CCM.releaseDatabase();
 		}
-//		System.out.println("ended total reservations transaction " + mycnt);
+		// System.out.println("ended total reservations transaction " + mycnt);
 	}
 }
