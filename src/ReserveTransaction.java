@@ -4,8 +4,8 @@ import javafx.util.Pair;
 
 public class ReserveTransaction implements Runnable
 {
-	Flight flight;
-	Passenger passenger;
+	String flightId;
+	String passengerId;
 	Database db;
 	ConcurrencyController CCM;
 	static Integer cnt = 1;
@@ -14,8 +14,8 @@ public class ReserveTransaction implements Runnable
 	
 	public ReserveTransaction(String flight, String passenger, Database db, ConcurrencyController CCM, int type)
 	{
-		this.flight = (Flight) db.getbyId(flight);
-		this.passenger = (Passenger) db.getbyId(passenger);
+		flightId = flight;
+		passengerId = passenger;
 		this.db = db;
 		this.CCM = CCM;
 		mycnt = cnt++;
@@ -26,6 +26,8 @@ public class ReserveTransaction implements Runnable
 	{
 		System.out.println("started reserve transaction " + mycnt);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
+		Flight flight = (Flight) db.getbyId(flightId);
+		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		varsNeeded.add(new Pair<>(2, flight));
 		varsNeeded.add(new Pair<>(2, passenger));
 		// System.out.println("variables added " + mycnt);

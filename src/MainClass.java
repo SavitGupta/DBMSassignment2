@@ -66,8 +66,8 @@ public class MainClass
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 		ArrayList<Runnable> transactions = new ArrayList<Runnable>();
-		int num_items = 6;
-		int num_trans = 10;
+		int num_items = 30;
+		int num_trans = 10000;
 		generate_Database(num_items, db, flights, passengers);
 		ccm.add(db);
 		generate_Transactions(num_trans, db, flights, passengers, transactions, ccm);
