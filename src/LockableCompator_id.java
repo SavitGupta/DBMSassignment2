@@ -1,6 +1,6 @@
-import javafx.util.Pair;
-
 import java.util.Comparator;
+
+import javafx.util.Pair;
 
 public class LockableCompator_id implements Comparator<Pair<Integer, Lockables>>
 {

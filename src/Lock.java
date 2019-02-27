@@ -57,7 +57,7 @@ public class Lock
 			}
 		}
 	}
-
+	
 	void acquire_exclusive()
 	{
 		Thread t1 = Thread.currentThread();
@@ -102,9 +102,11 @@ public class Lock
 	{
 		// System.out.println("just inside release");
 		isLocked_exclusive = false;
-		if(heldby > 0){
-			heldby --;
-			if(heldby == 0){
+		if (heldby > 0)
+		{
+			heldby--;
+			if (heldby == 0)
+			{
 				isLocked_shared = false;
 			}
 		}

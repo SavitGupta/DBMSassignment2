@@ -27,23 +27,26 @@ public class Flight extends Lockables
 	
 	public boolean book_flight(Passenger pas)
 	{
-		if (capacity <= 0)
+		if (availablitiy <= 0)
 		{
 			return false;
 		}
-		capacity -= 1;
+		availablitiy -= 1;
 		passgeners.add(pas);
 		pas.add_flight(this);
 		return true;
 	}
+	
 	public boolean cancel_flight(Passenger pas)
 	{
-		if(!pas.flights.contains(this)){
+		if (!pas.flights.contains(this))
+		{
 			return false;
 		}
-		else{
+		else
+		{
 			pas.cancel_flight(this);
-			capacity ++;
+			availablitiy++;
 			return true;
 		}
 	}
