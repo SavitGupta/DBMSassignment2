@@ -42,4 +42,9 @@ public class Passenger extends Lockables
 	{
 		return this.flights;
 	}
+	
+	public void reset()
+	{
+		this.flights = new ArrayList<Flight>();
+	}
 }

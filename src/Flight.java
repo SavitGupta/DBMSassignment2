@@ -4,7 +4,6 @@ public class Flight extends Lockables
 {
 	String id;
 	ArrayList<Passenger> passgeners;
-	ArrayList<Seat> seats;
 	int capacity;
 	int availablitiy;
 	
@@ -12,16 +11,9 @@ public class Flight extends Lockables
 	{
 		super("F", id);
 		this.passgeners = new ArrayList<>();
-		this.seats = new ArrayList<Seat>(capacity);
 		this.capacity = capacity;
 		this.id = id;
 		this.availablitiy = capacity;
-		// seats = new ArrayList<>(capacity);
-		// for (int i = 0; i < capacity; i++)
-		// {
-		// Seat temp = new Seat(i + 1, true);
-		// seats.set(i, temp);
-		// }
 		db.add(this);
 	}
 	
@@ -49,5 +41,11 @@ public class Flight extends Lockables
 			availablitiy++;
 			return true;
 		}
+	}
+	
+	public void reset()
+	{
+		this.passgeners = new ArrayList<Passenger>();
+		this.availablitiy = 0;
 	}
 }
