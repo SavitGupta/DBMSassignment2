@@ -12,7 +12,7 @@ public class Lock
 	{
 		waiters = new LinkedList<>();
 		isLocked_shared = false;
-		isLocked_shared = false;
+		isLocked_exclusive = false;
 		heldby = 0;
 		id_holder = "";
 	}

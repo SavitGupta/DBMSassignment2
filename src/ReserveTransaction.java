@@ -24,13 +24,13 @@ public class ReserveTransaction implements Runnable
 	
 	public void run()
 	{
-		// System.out.println("started reserve transaction " + mycnt);
+		System.out.println("started reserve transaction " + mycnt);
 		ArrayList<Pair<Integer, Lockables>> varsNeeded = new ArrayList<>();
 		Flight flight = (Flight) db.getbyId(flightId);
 		Passenger passenger = (Passenger) db.getbyId(passengerId);
 		varsNeeded.add(new Pair<>(2, flight));
 		varsNeeded.add(new Pair<>(2, passenger));
-		// System.out.println("variables added " + mycnt);
+		System.out.println("variables added " + mycnt);
 		if (this.type == 1)
 		{
 			CCM.lock_acquire(varsNeeded);
@@ -41,9 +41,9 @@ public class ReserveTransaction implements Runnable
 		}
 		flight = (Flight) db.getbyId(flightId);
 		passenger = (Passenger) db.getbyId(passengerId);
-		// System.out.println("lock acquired for reserve transaction " + mycnt);
+		System.out.println("lock acquired for reserve transaction " + mycnt);
 		flight.book_flight(passenger);
-		// System.out.println("flight booked " + mycnt);
+		System.out.println("flight booked " + mycnt);
 		if (this.type == 1)
 		{
 			CCM.release(varsNeeded);
@@ -52,6 +52,6 @@ public class ReserveTransaction implements Runnable
 		{
 			CCM.releaseDatabase();
 		}
-		// System.out.println("ended reserve transaction " + mycnt);
+		System.out.println("ended reserve transaction " + mycnt);
 	}
 }

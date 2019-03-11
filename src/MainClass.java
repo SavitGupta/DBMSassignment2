@@ -103,7 +103,7 @@ public class MainClass
 			throughput = num_trans * (1000 / tooktime);
 			// System.out.println("time taken " + tooktime);
 			// System.out.println("start " + startTime + " end " + endTime);
-			System.out.println("Throughput for " + (i + a) + " threads is " + throughput + " 2PL transactions");
+			System.out.println("Throughput for " + (i * 2 + a) + " threads is " + throughput + " 2PL transactions");
 		}
 		System.out.println();
 		transactions = new ArrayList<>();
@@ -138,7 +138,59 @@ public class MainClass
 			tooktime = (endTime - startTime);
 			throughput = num_trans * (1000 / tooktime);
 			// System.out.println("start " + startTime + " end " + endTime);
-			System.out.println("Throughput for " + (i + a) + " threads is " + throughput + " serial transactions");
+			System.out.println("Throughput for " + (i * 2 + a) + " threads is " + throughput + " serial transactions");
 		}
+		// Database db = new Database();
+		// ConcurrencyController ccm = new ConcurrencyController();
+		// ArrayList<Runnable> transactions = new ArrayList<Runnable>();
+		// ArrayList<Passenger> passengers = new ArrayList<Passenger>();
+		// Flight f1 = new Flight("F1", 4, db);
+		// Flight f2 = new Flight("F2", 4, db);
+		// Flight f3 = new Flight("F3", 4, db);
+		// Flight f4 = new Flight("F4", 4, db);
+		// Flight f5 = new Flight("F5", 4, db);
+		// Passenger p1 = new Passenger("P1", db);
+		// Passenger p2 = new Passenger("P2", db);
+		// Passenger p3 = new Passenger("P3", db);
+		// Passenger p4 = new Passenger("P4", db);
+		// ccm.add(db);
+		// ExecutorService exec = Executors.newFixedThreadPool(15);
+		// ReserveTransaction RT4 = new ReserveTransaction(f1.id, p3.id, db, ccm, 2);
+		// ReserveTransaction RT5 = new ReserveTransaction(f2.id, p3.id, db, ccm, 2);
+		// MyFlightsTransaction FT1 = new MyFlightsTransaction(p3.id, db, ccm, 2);
+		// TotalReservationTransaction TR1 = new TotalReservationTransaction(db, ccm, 2);
+		// TransferTransaction TT1 = new TransferTransaction(f1.id, f3.id, p3.id, db, ccm, 2);
+		// MyFlightsTransaction FT2 = new MyFlightsTransaction(p3.id, db, ccm, 2);
+		// TotalReservationTransaction TR2 = new TotalReservationTransaction(db, ccm, 2);
+		// CancelTransaction CT1 = new CancelTransaction(f1.id, p3.id, db, ccm, 2);
+		// MyFlightsTransaction FT3 = new MyFlightsTransaction(p3.id, db, ccm, 2);
+		// CancelTransaction CT2 = new CancelTransaction(f2.id, p3.id, db, ccm, 2);
+		// MyFlightsTransaction FT4 = new MyFlightsTransaction(p3.id, db, ccm, 2);
+		// exec.execute(RT4);
+		// Thread.sleep(100);
+		// exec.execute(RT5);
+		// Thread.sleep(100);
+		// exec.execute(FT1);
+		// Thread.sleep(100);
+		// exec.execute(TR1);
+		// Thread.sleep(100);
+		// exec.execute(TT1);
+		// Thread.sleep(100);
+		// exec.execute(FT2);
+		// Thread.sleep(100);
+		// exec.execute(TR2);
+		// Thread.sleep(100);
+		// exec.execute(CT1);
+		// Thread.sleep(100);
+		// exec.execute(FT3);
+		// Thread.sleep(100);
+		// exec.execute(CT2);
+		// Thread.sleep(100);
+		// exec.execute(FT4);
+		// if (!exec.isTerminated())
+		// {
+		// exec.shutdown();
+		// exec.awaitTermination(5L, TimeUnit.SECONDS);
+		// }
 	}
 }
